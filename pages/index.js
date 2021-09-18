@@ -22,7 +22,7 @@ export default function Home(props) {
 
         <p className={styles.description}>Add your email address</p>
 
-        <form onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <label>
             Email:
             <input
