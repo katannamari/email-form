@@ -1,8 +1,15 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+export default function Home(props) {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    alert(`Submitting email ${email}`);
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -15,10 +22,14 @@ export default function Home() {
 
         <p className={styles.description}>Add your email address</p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>
             Email:
-            <input type="email" name="email" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </label>
           <input type="submit" value="Submit" />
         </form>
