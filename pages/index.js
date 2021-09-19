@@ -4,12 +4,26 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 export default function Home(props) {
-  const [email, setEmail] = useState("");
+  const validEmail = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/i);
 
+  // State variables
+  const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState(false);
+
+  // User clicks Submit
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    alert(`Submitting email ${email}`);
+
+    // Validate email
+    if (validEmail.test(email)) {
+      setEmailErr(false);
+      alert("Email is true!");
+    } else {
+      alert("Email is false");
+      setEmailErr(true);
+    }
   };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,15 +37,18 @@ export default function Home(props) {
         <p className={styles.description}>Add your email address</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
+          <input
+            type="email"
+            placeholder="Type here"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <input type="submit" value="Submit" />
+          {emailErr && (
+            <p className={styles.errormsg}>
+              Please enter a valid email address
+            </p>
+          )}
         </form>
       </main>
 
