@@ -8,18 +8,29 @@ export default function Home(props) {
 
   // State variables
   const [email, setEmail] = useState("");
+  const [emailArray, setEmailArray] = useState([]);
   const [emailErr, setEmailErr] = useState(false);
 
+  const handleEmailStorage = (email) => {
+    console.log(email);
+    // Save email into an array
+    const newEmail = emailArray;
+    newEmail.push(email);
+    setEmailArray(newEmail);
+    // Save array as JSON
+    localStorage.setItem("email", JSON.stringify(emailArray));
+    console.log(emailArray);
+  };
   // User clicks Submit
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
     // Validate email
     if (validEmail.test(email)) {
       setEmailErr(false);
       alert("Email is true!");
+      handleEmailStorage(email);
     } else {
-      alert("Email is false");
       setEmailErr(true);
     }
   };
