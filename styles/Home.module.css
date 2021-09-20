@@ -89,3 +89,7 @@
 .errormsg {
   color: red;
 }
+
+.successmsg {
+  color: green;
+}

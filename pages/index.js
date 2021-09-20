@@ -11,12 +11,14 @@ export default function Home(props) {
   const [emailArray, setEmailArray] = useState([]);
   const [emailErr, setEmailErr] = useState(false);
   const [emailDouble, setEmailDouble] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
 
   const handleEmailStorage = (email) => {
     // Save email into an array
     const newEmail = emailArray;
     if (emailArray.includes(email)) {
       setEmailDouble(true);
+      setSuccessMsg(false);
     } else {
       newEmail.push(email);
       setEmailArray(newEmail);
@@ -24,6 +26,7 @@ export default function Home(props) {
       localStorage.setItem("email", JSON.stringify(emailArray));
       console.log(emailArray);
       setEmailDouble(false);
+      setSuccessMsg(true);
     }
   };
 
@@ -69,6 +72,7 @@ export default function Home(props) {
           {emailDouble && (
             <p className={styles.errormsg}>Email has already been added.</p>
           )}
+          {successMsg && <p className={styles.successmsg}>Email added!</p>}
         </form>
       </main>
 
