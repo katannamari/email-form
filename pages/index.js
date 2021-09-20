@@ -10,17 +10,23 @@ export default function Home(props) {
   const [email, setEmail] = useState("");
   const [emailArray, setEmailArray] = useState([]);
   const [emailErr, setEmailErr] = useState(false);
+  const [emailDouble, setEmailDouble] = useState(false);
 
   const handleEmailStorage = (email) => {
-    console.log(email);
     // Save email into an array
     const newEmail = emailArray;
-    newEmail.push(email);
-    setEmailArray(newEmail);
-    // Save array as JSON
-    localStorage.setItem("email", JSON.stringify(emailArray));
-    console.log(emailArray);
+    if (emailArray.includes(email)) {
+      setEmailDouble(true);
+    } else {
+      newEmail.push(email);
+      setEmailArray(newEmail);
+      // Save array as JSON
+      localStorage.setItem("email", JSON.stringify(emailArray));
+      console.log(emailArray);
+      setEmailDouble(false);
+    }
   };
+
   // User clicks Submit
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,7 +34,6 @@ export default function Home(props) {
     // Validate email
     if (validEmail.test(email)) {
       setEmailErr(false);
-      alert("Email is true!");
       handleEmailStorage(email);
     } else {
       setEmailErr(true);
@@ -59,6 +64,10 @@ export default function Home(props) {
             <p className={styles.errormsg}>
               Please enter a valid email address
             </p>
+          )}
+
+          {emailDouble && (
+            <p className={styles.errormsg}>Email has already been added.</p>
           )}
         </form>
       </main>
